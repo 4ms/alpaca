@@ -69,6 +69,12 @@
 // no prefetching
 #define ALPACA_PREFETCH(location) ;
 #endif
+#elif defined(ALPACA_NO_PREFETCH)
+#define ALPACA_PREFETCH(location) ;
+#ifndef __ALPACA_BYTE_ORDER
+#include <sys/param.h>
+#define __ALPACA_BYTE_ORDER __BYTE_ORDER
+#endif
 #else
 #error unsupported system
 #endif
