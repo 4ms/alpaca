@@ -3,8 +3,6 @@
 #include <alpaca/detail/options.h>
 #include <alpaca/detail/variable_length_encoding.h>
 #include <cstdint>
-#include <fstream>
-#include <iostream>
 #include <system_error>
 #include <vector>
 

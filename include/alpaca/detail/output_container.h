@@ -1,6 +1,5 @@
 #pragma once
 #include <array>
-#include <fstream>
 #include <system_error>
 #include <vector>
 
@@ -25,11 +24,7 @@ static inline void append(const uint8_t &value, uint8_t container[],
   container[index++] = value;
 }
 
-static inline void append(const uint8_t &value, std::ofstream &container,
-                          std::size_t &index) {
-  container << value;
-  index += 1;
-}
+
 
 } // namespace detail
 
