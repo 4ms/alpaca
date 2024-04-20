@@ -56,7 +56,7 @@ void encode_varint_6(int_t value, Container &output, std::size_t &byte_index) {
 }
 
 template <typename int_t, typename Container>
-typename std::enable_if<!std::is_same_v<Container, std::ifstream>, int_t>::type
+typename std::enable_if<true, int_t>::type
 decode_varint_firstbyte_6(Container &input, std::size_t &current_index,
                           bool &negative, bool &multibyte) {
   int octet = 0;
@@ -103,7 +103,7 @@ decode_varint_firstbyte_6(Container &input, std::size_t &current_index,
 }
 
 template <typename int_t, typename Container>
-typename std::enable_if<!std::is_same_v<Container, std::ifstream>, int_t>::type
+typename std::enable_if<true, int_t>::type
 decode_varint_6(Container &input, std::size_t &current_index) {
   int_t ret = 0;
   for (std::size_t i = 0; i < sizeof(int_t); ++i) {
@@ -156,7 +156,7 @@ void encode_varint_7(int_t value, Container &output, std::size_t &byte_index) {
 }
 
 template <typename int_t, typename Container>
-typename std::enable_if<!std::is_same_v<Container, std::ifstream>, int_t>::type
+typename std::enable_if<true, int_t>::type
 decode_varint_7(Container &input, std::size_t &current_index) {
   int_t ret = 0;
   for (std::size_t i = 0; i < sizeof(int_t); ++i) {

@@ -177,7 +177,7 @@ std::size_t serialize(const T &s, Container &bytes) {
 template <options O, typename T,
           std::size_t N = detail::aggregate_arity<std::remove_cv_t<T>>::size(),
           typename Container>
-typename std::enable_if<!std::is_same_v<Container, std::ofstream> &&
+typename std::enable_if<true &&
                             !std::is_array_v<Container>,
                         std::size_t>::type
 serialize(const T &s, Container &bytes, std::size_t &byte_index) {
@@ -221,7 +221,7 @@ serialize(const T &s, Container &bytes, std::size_t &byte_index) {
 template <options O, typename T,
           std::size_t N = detail::aggregate_arity<std::remove_cv_t<T>>::size(),
           typename Container>
-typename std::enable_if<!std::is_same_v<Container, std::ofstream> &&
+typename std::enable_if<true &&
                             std::is_array_v<Container>,
                         std::size_t>::type
 serialize(const T &s, Container &bytes, std::size_t &byte_index) {
@@ -361,7 +361,7 @@ T deserialize(Container &bytes, const std::size_t size,
 template <options O, typename T,
           std::size_t N = detail::aggregate_arity<std::remove_cv_t<T>>::size(),
           typename Container>
-typename std::enable_if<!std::is_same_v<Container, std::ifstream> &&
+typename std::enable_if<true &&
                             !std::is_array_v<Container>,
                         void>::type
 deserialize(T &s, Container &bytes, std::size_t &byte_index,
@@ -451,7 +451,7 @@ deserialize(T &s, Container &bytes, std::size_t &byte_index,
 template <options O, typename T,
           std::size_t N = detail::aggregate_arity<std::remove_cv_t<T>>::size(),
           typename Container>
-typename std::enable_if<!std::is_same_v<Container, std::ifstream> &&
+typename std::enable_if<true &&
                             std::is_array_v<Container>,
                         void>::type
 deserialize(T &s, Container &bytes, std::size_t &byte_index,
