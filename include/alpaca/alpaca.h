@@ -1,11 +1,12 @@
 #pragma once
+
 #include <alpaca/detail/aggregate_arity.h>
 #include <alpaca/detail/crc32.h>
 #include <alpaca/detail/endian.h>
 #include <alpaca/detail/from_bytes.h>
 #include <alpaca/detail/is_specialization.h>
 #include <alpaca/detail/options.h>
-#include <alpaca/detail/print_bytes.h>
+// #include <alpaca/detail/print_bytes.h>
 #include <alpaca/detail/struct_nth_field.h>
 #include <alpaca/detail/to_bytes.h>
 #include <alpaca/detail/type_info.h>
@@ -176,7 +177,7 @@ std::size_t serialize(const T &s, Container &bytes) {
 template <options O, typename T,
           std::size_t N = detail::aggregate_arity<std::remove_cv_t<T>>::size(),
           typename Container>
-typename std::enable_if<!std::is_same_v<Container, std::ofstream> &&
+typename std::enable_if<true &&
                             !std::is_array_v<Container>,
                         std::size_t>::type
 serialize(const T &s, Container &bytes, std::size_t &byte_index) {
@@ -201,26 +202,12 @@ serialize(const T &s, Container &bytes, std::size_t &byte_index) {
   return byte_index;
 }
 
-// for std::fstream
-template <options O, typename T,
-          std::size_t N = detail::aggregate_arity<std::remove_cv_t<T>>::size(),
-          typename Container>
-typename std::enable_if<std::is_same_v<Container, std::ofstream>,
-                        std::size_t>::type
-serialize(const T &s, Container &bytes, std::size_t &byte_index) {
-  static_assert(!detail::with_version<O>(),
-                "options::with_version is not supported when writing to file");
-  static_assert(!detail::with_checksum<O>(),
-                "options::with_checksum is not supported when writing to file");
-  detail::serialize_helper<O, T, N, Container, 0>(s, bytes, byte_index);
-  return byte_index;
-}
 
 // for C-style arrays
 template <options O, typename T,
           std::size_t N = detail::aggregate_arity<std::remove_cv_t<T>>::size(),
           typename Container>
-typename std::enable_if<!std::is_same_v<Container, std::ofstream> &&
+typename std::enable_if<true &&
                             std::is_array_v<Container>,
                         std::size_t>::type
 serialize(const T &s, Container &bytes, std::size_t &byte_index) {
@@ -360,7 +347,7 @@ T deserialize(Container &bytes, const std::size_t size,
 template <options O, typename T,
           std::size_t N = detail::aggregate_arity<std::remove_cv_t<T>>::size(),
           typename Container>
-typename std::enable_if<!std::is_same_v<Container, std::ifstream> &&
+typename std::enable_if<true &&
                             !std::is_array_v<Container>,
                         void>::type
 deserialize(T &s, Container &bytes, std::size_t &byte_index,
@@ -429,28 +416,11 @@ deserialize(T &s, Container &bytes, std::size_t &byte_index,
   }
 }
 
-// For std::ifstream
-template <options O, typename T,
-          std::size_t N = detail::aggregate_arity<std::remove_cv_t<T>>::size(),
-          typename Container>
-typename std::enable_if<std::is_same_v<Container, std::ifstream>, void>::type
-deserialize(T &s, Container &bytes, std::size_t &byte_index,
-            std::size_t &end_index, std::error_code &error_code) {
-  static_assert(
-      !detail::with_version<O>(),
-      "options::with_version is not supported when reading from file");
-  static_assert(
-      !detail::with_checksum<O>(),
-      "options::with_checksum is not supported when reading from file");
-  detail::deserialize_helper<O, T, N, Container, 0>(s, bytes, byte_index,
-                                                    end_index, error_code);
-}
-
 // For C-style arrays
 template <options O, typename T,
           std::size_t N = detail::aggregate_arity<std::remove_cv_t<T>>::size(),
           typename Container>
-typename std::enable_if<!std::is_same_v<Container, std::ifstream> &&
+typename std::enable_if<true &&
                             std::is_array_v<Container>,
                         void>::type
 deserialize(T &s, Container &bytes, std::size_t &byte_index,
