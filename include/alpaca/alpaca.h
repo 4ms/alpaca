@@ -13,7 +13,10 @@
 #include <alpaca/detail/types/array.h>
 #include <alpaca/detail/types/bitset.h>
 #include <alpaca/detail/types/deque.h>
-#include <alpaca/detail/types/duration.h>
+
+// FIXME: Clang-14 has a bug with <chrono>: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1050684
+// #include <alpaca/detail/types/duration.h>
+
 #include <alpaca/detail/types/filesystem_path.h>
 #include <alpaca/detail/types/list.h>
 #include <alpaca/detail/types/map.h>
